@@ -61,7 +61,7 @@ private fun SplashScreen() {
             Text(
                 text = stringResource(Res.string.app_name).uppercase(),
                 style = MaterialTheme.typography.h4,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.onSurface,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
