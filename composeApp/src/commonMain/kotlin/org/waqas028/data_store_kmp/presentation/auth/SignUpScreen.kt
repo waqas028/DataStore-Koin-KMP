@@ -22,8 +22,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,65 +42,69 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import datastore_kmp.composeapp.generated.resources.Res
-import datastore_kmp.composeapp.generated.resources.add_your_account_to_ventagram
 import datastore_kmp.composeapp.generated.resources.create_an_account
 import datastore_kmp.composeapp.generated.resources.email_address
+import datastore_kmp.composeapp.generated.resources.enter_phone_number
 import datastore_kmp.composeapp.generated.resources.enter_your_email_address
+import datastore_kmp.composeapp.generated.resources.enter_your_name
 import datastore_kmp.composeapp.generated.resources.enter_your_password
 import datastore_kmp.composeapp.generated.resources.forget_password
+import datastore_kmp.composeapp.generated.resources.get_started_on_ventagram
 import datastore_kmp.composeapp.generated.resources.ic_or_divider
+import datastore_kmp.composeapp.generated.resources.name
 import datastore_kmp.composeapp.generated.resources.not_a_member
 import datastore_kmp.composeapp.generated.resources.password
+import datastore_kmp.composeapp.generated.resources.phone_number
 import datastore_kmp.composeapp.generated.resources.sign_in
-import datastore_kmp.composeapp.generated.resources.sign_in_to_your_account
 import datastore_kmp.composeapp.generated.resources.sign_in_with_google
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.waqas028.data_store_kmp.data.dto.LoginDTO
-import org.waqas028.data_store_kmp.data.model.UserPreferences
+import org.waqas028.data_store_kmp.data.dto.SignUpDTO
+import org.waqas028.data_store_kmp.data.utils.isPasswordValid
 import org.waqas028.data_store_kmp.data.utils.isValidEmail
+import org.waqas028.data_store_kmp.data.utils.isValidPhoneNumber
 import org.waqas028.data_store_kmp.presentation.component.CustomButton
 import org.waqas028.data_store_kmp.presentation.component.CustomCircularProgressBar
 import org.waqas028.data_store_kmp.presentation.component.GoogleButton
 import org.waqas028.data_store_kmp.presentation.component.PasswordTextFields
 import org.waqas028.data_store_kmp.presentation.component.TextFieldWithIcon
-import org.waqas028.data_store_kmp.presentation.navigation.Routes
 
 @Composable
-fun LoginScreen(navController: NavController, authVM: AuthVM = koinViewModel()) {
-    val error = authVM.error
-    val loginResponse = authVM.loginResponse
+fun SignUpScreen(navController: NavController, authVM: AuthVM = koinViewModel()) {
+    val signUpResponse = authVM.signUpResponse
 
-    LaunchedEffect(loginResponse) {
-        loginResponse?.let {
+    LaunchedEffect(signUpResponse) {
+        signUpResponse?.let {
             println(it)
-            if (it.status) navController.navigate(Routes.HomeScreen.route) {
-                popUpTo(navController.graph.route ?: Routes.LoginScreen.route)
-            }
-            authVM.loginResponse = null
+            if (it.status) navController.popBackStack()
+            authVM.signUpResponse = null
         }
     }
 
-    LoginScreen(
+    SignUpScreen(
         isLoading = authVM.isLoading,
         error = authVM.error,
-        onSignInClick = { loginDTO ->
-            authVM.login(loginDTO)
+        onSignInClick = {
+            navController.popBackStack()
         },
-        onSignUpClick = { navController.navigate(Routes.SignUpScreen.route) },
+        onSignUpClick = { signUpDto->
+            authVM.signUp(signUpDto)
+        },
     )
 }
 
 @Composable
-fun LoginScreen(
+fun SignUpScreen(
     isLoading: Boolean,
     error: String,
-    onSignInClick: (LoginDTO) -> Unit,
-    onSignUpClick: () -> Unit,
-) {  
+    onSignInClick: () -> Unit,
+    onSignUpClick: (SignUpDTO) -> Unit,
+) {
+    var name by rememberSaveable { mutableStateOf("") }
     var emailAddress by rememberSaveable { mutableStateOf("") }
+    var phoneNumber by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     var errorMessage by rememberSaveable { mutableStateOf(error) }
@@ -118,13 +124,13 @@ fun LoginScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = stringResource(Res.string.sign_in_to_your_account),
+                text = stringResource(Res.string.create_an_account),
                 style = MaterialTheme.typography.h3,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(start = 15.dp, top = 61.dp, end = 15.dp)
             )
             Text(
-                text = stringResource(Res.string.add_your_account_to_ventagram),
+                text = stringResource(Res.string.get_started_on_ventagram),
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 9.dp)
@@ -136,6 +142,23 @@ fun LoginScreen(
                     .background(MaterialTheme.colors.background).padding(horizontal = 15.dp)
             ) {
                 Spacer(modifier = Modifier.height(28.dp))
+                Text(
+                    text = stringResource(Res.string.name),
+                    style = MaterialTheme.typography.subtitle2,
+                    color = MaterialTheme.colors.onSurface
+                )
+                TextFieldWithIcon(placeholder = stringResource(Res.string.enter_your_name),
+                    textValue = name,
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Person,
+                            tint = MaterialTheme.colors.primary,
+                            contentDescription = "Person"
+                        )
+                    }) {
+                    name = it
+                }
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = stringResource(Res.string.email_address),
                     style = MaterialTheme.typography.subtitle2,
@@ -151,6 +174,23 @@ fun LoginScreen(
                         )
                     }) {
                     emailAddress = it
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringResource(Res.string.phone_number),
+                    style = MaterialTheme.typography.subtitle2,
+                    color = MaterialTheme.colors.onSurface
+                )
+                TextFieldWithIcon(placeholder = stringResource(Res.string.enter_phone_number),
+                    textValue = phoneNumber,
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Call,
+                            tint = MaterialTheme.colors.primary,
+                            contentDescription = "call"
+                        )
+                    }) {
+                    phoneNumber = it
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
@@ -194,13 +234,23 @@ fun LoginScreen(
                 CustomButton(modifier = Modifier.widthIn(min = 300.dp, max = 600.dp),
                     buttonText = stringResource(Res.string.sign_in),
                     onButtonClick = {
-                        if (emailAddress.trim().isEmpty()) {
-                            errorMessage = "Please enter email address"
+                        val (isValid, passwordError) = isPasswordValid(password.trim())
+                        if (emailAddress.trim().isEmpty() || password.trim().isEmpty()  || name.trim().isEmpty() || phoneNumber.trim().isEmpty()) {
+                            errorMessage = "Please fill empty fields!"
                         }else if (!isValidEmail(emailAddress.trim())) {
-                            errorMessage = "Please enter valid email address"
-                        }else if(password.trim().isEmpty()){
-                            errorMessage = "Please enter password"
-                        } else onSignInClick(LoginDTO(email = emailAddress, password = password))
+                            errorMessage = "Please enter valid email address!"
+                        } else if(!isValidPhoneNumber(phoneNumber.trim())){
+                            errorMessage = "Please enter valid Phone Number!"
+                        } else if(!isValid){
+                            errorMessage = passwordError.orEmpty()
+                        } else onSignUpClick(
+                            SignUpDTO(
+                                email = emailAddress,
+                                password = password,
+                                name = name,
+                                phoneNumber = phoneNumber
+                            )
+                        )
                     })
                 Spacer(modifier = Modifier.height(30.dp))
                 Image(
@@ -229,7 +279,7 @@ fun LoginScreen(
                         modifier = Modifier
                             .padding(start = 5.dp)
                             .clickable {
-                                onSignUpClick()
+                                onSignInClick()
                             }
                     )
                 }
@@ -242,6 +292,6 @@ fun LoginScreen(
 
 @Preview
 @Composable
-fun LoginScreenPreview() {
+private fun SignUpScreenPreview() {
     LoginScreen(isLoading = true, error = "", onSignInClick = {}, onSignUpClick = {})
 }

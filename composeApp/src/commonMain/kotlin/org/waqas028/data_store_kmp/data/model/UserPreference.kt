@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class UserPreferences(
     val username: String,
     val email: String,
+    val phoneNumber: String,
     val password: String?,
 )

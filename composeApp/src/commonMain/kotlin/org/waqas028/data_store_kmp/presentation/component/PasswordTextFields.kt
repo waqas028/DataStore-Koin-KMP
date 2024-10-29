@@ -20,7 +20,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import datastore_kmp.composeapp.generated.resources.Res
 import datastore_kmp.composeapp.generated.resources.ic_eye_hide
 import datastore_kmp.composeapp.generated.resources.ic_eye_show
@@ -31,7 +30,6 @@ fun PasswordTextFields(
     placeholder: String,
     password: String,
     passwordVisibility: Boolean,
-    errorMessage: String,
     onTextChange: (String) -> Unit,
     onToggleClick: (Boolean) -> Unit,
 ) {
@@ -73,15 +71,9 @@ fun PasswordTextFields(
                         )
                 }
             },
-            isError = errorMessage.isNotEmpty(),
             shape = RoundedCornerShape(15.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = errorMessage,
-            color = MaterialTheme.colors.error,
-            lineHeight = 20.sp
         )
     }
 }

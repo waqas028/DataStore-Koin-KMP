@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 fun TextFieldWithIcon(
     placeholder: String,
     textValue: String,
-    errorMessage: String,
     trailingIcon: @Composable (() -> Unit)?,
     onTextChange: (String) -> Unit,
 ) {
@@ -42,21 +41,8 @@ fun TextFieldWithIcon(
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
             leadingIcon = trailingIcon,
-            trailingIcon = {
-                if (errorMessage.isNotEmpty()) Icon(
-                    imageVector = Icons.Filled.Warning,
-                    contentDescription = "",
-                    tint = MaterialTheme.colors.error
-                )
-            },
-            isError = errorMessage.isNotEmpty(),
             shape = RoundedCornerShape(15.dp),
             modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = errorMessage,
-            color = MaterialTheme.colors.error,
-            lineHeight = 20.sp
         )
     }
 }

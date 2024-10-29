@@ -16,6 +16,7 @@ data class LoginData(
     val id: Int?,
     val name: String?,
     val email: String?,
+    val phoneNumber: String?,
     val createAt: String?,
     val updatedAt: String?
 ){
@@ -27,6 +28,7 @@ val LoginData.Companion.mockup by lazy{
         id = 1,
         name = "Ali",
         email = "abc@gmail.com",
+        phoneNumber = "+923045593294",
         createAt = "",
         updatedAt = ""
     )

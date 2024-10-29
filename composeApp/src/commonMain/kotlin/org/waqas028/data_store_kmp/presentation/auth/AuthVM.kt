@@ -17,7 +17,6 @@ import org.waqas028.data_store_kmp.data.dto.SignUpDTO
 import org.waqas028.data_store_kmp.data.model.UserPreferences
 import org.waqas028.data_store_kmp.data.response.LoginData
 import org.waqas028.data_store_kmp.data.response.LoginResponse
-import org.waqas028.data_store_kmp.data.response.mockup
 import org.waqas028.data_store_kmp.data.storage.createDataStore
 
 class AuthVM : ViewModel() {
@@ -26,9 +25,8 @@ class AuthVM : ViewModel() {
 
     var isLoading by mutableStateOf(false)
     var error by mutableStateOf("")
-    var loginResponse by mutableStateOf<LoginResponse?>(null)
-    private var userPreference by mutableStateOf<UserPreferences?>(null)
 
+    var loginResponse by mutableStateOf<LoginResponse?>(null)
     fun login(loginDTO: LoginDTO) = viewModelScope.launch {
         error = ""
         isLoading = true
@@ -41,6 +39,7 @@ class AuthVM : ViewModel() {
                     id = 1,
                     name = userPreference?.username,
                     email = userPreference?.email,
+                    phoneNumber = userPreference?.phoneNumber,
                     createAt = "",
                     updatedAt = ""
                 )
@@ -51,11 +50,33 @@ class AuthVM : ViewModel() {
         }
     }
 
+    var signUpResponse by mutableStateOf<LoginResponse?>(null)
     fun signUp(signUpDTO: SignUpDTO) = viewModelScope.launch {
         isLoading = true
-        loginResponse = LoginResponse.mockup
+        setData(
+            UserPreferences(
+                username = signUpDTO.name,
+                email = signUpDTO.email,
+                password = signUpDTO.password,
+                phoneNumber = signUpDTO.phoneNumber
+            )
+        )
+        getData()
+        delay(3000)
+        isLoading = false
+        loginResponse = LoginResponse(
+            status = true, message = "Login Successfully", data = LoginData(
+                id = 1,
+                name = userPreference?.username,
+                email = userPreference?.email,
+                phoneNumber = userPreference?.phoneNumber,
+                createAt = "",
+                updatedAt = ""
+            )
+        )
     }
 
+    private var userPreference by mutableStateOf<UserPreferences?>(null)
     private fun getData() = viewModelScope.launch {
         dataStore.data.map { preferences ->
             preferences[dataStoreExample]?.let { json ->
@@ -66,7 +87,7 @@ class AuthVM : ViewModel() {
         }
     }
 
-    fun setData(userPreferences: UserPreferences) = viewModelScope.launch {
+    private fun setData(userPreferences: UserPreferences) = viewModelScope.launch {
         dataStore.edit { preferences ->
             val json = Json.encodeToString(UserPreferences.serializer(), userPreferences)
             preferences[dataStoreExample] = json

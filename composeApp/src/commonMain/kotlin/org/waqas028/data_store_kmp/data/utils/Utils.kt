@@ -19,6 +19,11 @@ fun isNameValid(name: String): Pair<Boolean, String?> {
     }
 }
 
+fun isValidPhoneNumber(phone: String): Boolean {
+    val phonePattern = "^\\+?[1-9]\\d{1,14}\$"
+    return phone.matches(phonePattern.toRegex())
+}
+
 fun isPasswordValid(password: String): Pair<Boolean, String?> {
     return when {
         password.length < 8 -> Pair(false, "Password must be at least 8 characters long.")

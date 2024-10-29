@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.waqas028.data_store_kmp.presentation.auth.LoginScreen
+import org.waqas028.data_store_kmp.presentation.auth.SignUpScreen
 import org.waqas028.data_store_kmp.presentation.onboarding.SplashScreen
 
 @Composable
@@ -40,6 +41,14 @@ fun App(
                     exitTransition = { ExitTransition.None }
                 ) {
                     LoginScreen(navController)
+                }
+
+                composable(
+                    route = Routes.SignUpScreen.route,
+                    enterTransition = { EnterTransition.None },
+                    exitTransition = { ExitTransition.None }
+                ) {
+                    SignUpScreen(navController)
                 }
             }
         }
