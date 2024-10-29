@@ -1,14 +1,27 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+# Data Store Preference with Koin in KMP
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+## Overview
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+This project demonstrates how to implement a login and signup system using Kotlin Multiplatform (KMP) with Jetpack Compose. It leverages Data Store preferences to securely store user data and includes validation for user inputs during signup and login.
 
+## Features
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+- **User Authentication**: Signup and login functionalities.
+- **Data Storage**: User data is stored using Data Store preferences.
+- **Input Validation**: Ensures users provide valid information during signup and login.
+- **User Interface**: Clean and responsive UI built with Jetpack Compose.
+- **Logout Functionality**: Users can log out and clear their session.
+
+## Getting Started
+
+### Prerequisites
+
+- Kotlin 1.5 or higher
+- Android Studio
+- Jetpack Compose
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/waqas028/DataStore-Koin-KMP.git
