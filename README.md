@@ -1,8 +1,8 @@
-# Data Store Preference with Koin in KMP
+# Data Store Preferences with Koin in Compose Multiplatform (KMP)
 
 ## Overview
 
-This project demonstrates how to implement a login and signup system using Kotlin Multiplatform (KMP) with Jetpack Compose. It leverages Data Store preferences to securely store user data and includes validation for user inputs during signup and login.
+A Kotlin Multiplatform project that demonstrates managing user authentication with data persistence using DataStore Preferences and Koin dependency injection. This project includes a Login and Sign-Up flow with full data validation. User information is saved in DataStore Preferences and used to verify login credentials.
 
 ## Features
 
