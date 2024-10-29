@@ -64,8 +64,10 @@ class AuthVM : ViewModel() {
         getData()
         delay(3000)
         isLoading = false
-        loginResponse = LoginResponse(
-            status = true, message = "Login Successfully", data = LoginData(
+        signUpResponse = LoginResponse(
+            status = true,
+            message = "SignUp Successfully",
+            data = LoginData(
                 id = 1,
                 name = userPreference?.username,
                 email = userPreference?.email,

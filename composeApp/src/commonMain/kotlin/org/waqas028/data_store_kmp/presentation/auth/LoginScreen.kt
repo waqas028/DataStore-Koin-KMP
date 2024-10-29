@@ -40,7 +40,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import datastore_kmp.composeapp.generated.resources.Res
-import datastore_kmp.composeapp.generated.resources.add_your_account_to_ventagram
+import datastore_kmp.composeapp.generated.resources.add_your_account_to_DataStore_Koin_KMP
 import datastore_kmp.composeapp.generated.resources.create_an_account
 import datastore_kmp.composeapp.generated.resources.email_address
 import datastore_kmp.composeapp.generated.resources.enter_your_email_address
@@ -68,7 +68,6 @@ import org.waqas028.data_store_kmp.presentation.navigation.Routes
 
 @Composable
 fun LoginScreen(navController: NavController, authVM: AuthVM = koinViewModel()) {
-    val error = authVM.error
     val loginResponse = authVM.loginResponse
 
     LaunchedEffect(loginResponse) {
@@ -124,7 +123,7 @@ fun LoginScreen(
                 modifier = Modifier.padding(start = 15.dp, top = 61.dp, end = 15.dp)
             )
             Text(
-                text = stringResource(Res.string.add_your_account_to_ventagram),
+                text = stringResource(Res.string.add_your_account_to_DataStore_Koin_KMP),
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 9.dp)

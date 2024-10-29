@@ -3,7 +3,7 @@
 
     <!--Auth Module String-->
     <string name="sign_in_to_your_account">Sign in to your\nAccount</string>
-    <string name="add_your_account_to_ventagram">Add your account details to get started to Ventagram </string>
+    <string name="add_your_account_to_DataStore-Koin-KMP">Add your account details to get started to DataStore-Koin-KMP </string>
     <string name="email_address">Email Address</string>
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="password">Password</string>
@@ -13,7 +13,7 @@
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="not_a_member">Not a member?</string>
     <string name="create_an_account">Create An Account</string>
-    <string name="get_started_on_ventagram">Get Started on ventagram by adding your details  </string>
+    <string name="get_started_on_DataStore-Koin-KMP">Get Started on DataStore-Koin-KMP by adding your details  </string>
     <string name="name">Name</string>
     <string name="enter_phone_number">Enter Phone number</string>
     <string name="phone_number">Phone Number</string>
@@ -36,5 +36,6 @@
     <string name="phone_validation_error">Please Enter Valid Phone Number!</string>
     <string name="otp_error">Please Enter Valid Otp!</string>
     <string name="password_not_match">Password Not Match!</string>
+    <string name="log_out">Log out</string>
 
 </resources>

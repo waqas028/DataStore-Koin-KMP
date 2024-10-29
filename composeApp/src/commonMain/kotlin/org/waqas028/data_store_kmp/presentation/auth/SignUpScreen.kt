@@ -49,7 +49,7 @@ import datastore_kmp.composeapp.generated.resources.enter_your_email_address
 import datastore_kmp.composeapp.generated.resources.enter_your_name
 import datastore_kmp.composeapp.generated.resources.enter_your_password
 import datastore_kmp.composeapp.generated.resources.forget_password
-import datastore_kmp.composeapp.generated.resources.get_started_on_ventagram
+import datastore_kmp.composeapp.generated.resources.get_started_on_DataStore_Koin_KMP
 import datastore_kmp.composeapp.generated.resources.ic_or_divider
 import datastore_kmp.composeapp.generated.resources.name
 import datastore_kmp.composeapp.generated.resources.not_a_member
@@ -130,7 +130,7 @@ fun SignUpScreen(
                 modifier = Modifier.padding(start = 15.dp, top = 61.dp, end = 15.dp)
             )
             Text(
-                text = stringResource(Res.string.get_started_on_ventagram),
+                text = stringResource(Res.string.get_started_on_DataStore_Koin_KMP),
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 9.dp)
@@ -251,7 +251,8 @@ fun SignUpScreen(
                                 phoneNumber = phoneNumber
                             )
                         )
-                    })
+                    }
+                )
                 Spacer(modifier = Modifier.height(30.dp))
                 Image(
                     painter = painterResource(Res.drawable.ic_or_divider),
