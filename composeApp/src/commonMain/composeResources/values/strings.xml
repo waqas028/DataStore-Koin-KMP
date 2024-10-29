@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Data Store KMP</string>
+
+    <!--Auth Module String-->
+    <string name="sign_in_to_your_account">Sign in to your\nAccount</string>
+    <string name="add_your_account_to_ventagram">Add your account details to get started to Ventagram </string>
+    <string name="email_address">Email Address</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter your Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="not_a_member">Not a member?</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="get_started_on_ventagram">Get Started on ventagram by adding your details  </string>
+    <string name="name">Name</string>
+    <string name="enter_phone_number">Enter Phone number</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="already_a_member">Already a member?</string>
+    <string name="signin_to_your_account">Sign in to your account</string>
+    <string name="enter_your_name">Enter your name </string>
+    <string name="sign_up">Sign Up </string>
+    <string name="send_otp">Send OTP </string>
+    <string name="verify">Verify</string>
+    <string name="enter_your_email_address_for_otp">Enter your email address so that we can send you an OTP to reset your Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="new_password">New Password</string>
+    <string name="retype_new_password">Re-Type New Password</string>
+    <string name="enter_new_password_access_account">Enter your new password so that you can access your account</string>
+    <string name="forget_password_without_question_mark">Forget Password</string>
+    <string name="enter_your_email_address_send_otp">Enter your email address so that we can send you an OTP to reset your Password</string>
+    <string name="speak_now">Speak Now!</string>
+    <string name="please_fill_empty_fields">Please fill empty fields!</string>
+    <string name="email_validation_error">Enter Valid Email Address!</string>
+    <string name="phone_validation_error">Please Enter Valid Phone Number!</string>
+    <string name="otp_error">Please Enter Valid Otp!</string>
+    <string name="password_not_match">Password Not Match!</string>
+
+</resources>
