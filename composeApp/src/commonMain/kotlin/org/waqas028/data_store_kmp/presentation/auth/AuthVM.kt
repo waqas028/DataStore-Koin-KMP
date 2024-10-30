@@ -33,7 +33,7 @@ class AuthVM : ViewModel() {
         getData()
         delay(3000L)
         isLoading = false
-        if (userPreference?.email == loginDTO.email && userPreference?.password == loginDTO.password) {
+        if (userPreference?.email?.trim() == loginDTO.email.trim() && userPreference?.password?.trim() == loginDTO.password.trim()) {
             loginResponse = LoginResponse(
                 status = true, message = "Login Successfully", data = LoginData(
                     id = 1,
@@ -44,7 +44,6 @@ class AuthVM : ViewModel() {
                     updatedAt = ""
                 )
             )
-            error = "Done ${userPreference?.email}"
         } else {
             error = "Invalid Credentials"
         }

@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import datastore_kmp.composeapp.generated.resources.Res
+import datastore_kmp.composeapp.generated.resources.already_a_member
 import datastore_kmp.composeapp.generated.resources.create_an_account
 import datastore_kmp.composeapp.generated.resources.email_address
 import datastore_kmp.composeapp.generated.resources.enter_phone_number
@@ -52,15 +53,14 @@ import datastore_kmp.composeapp.generated.resources.forget_password
 import datastore_kmp.composeapp.generated.resources.get_started_on_DataStore_Koin_KMP
 import datastore_kmp.composeapp.generated.resources.ic_or_divider
 import datastore_kmp.composeapp.generated.resources.name
-import datastore_kmp.composeapp.generated.resources.not_a_member
 import datastore_kmp.composeapp.generated.resources.password
 import datastore_kmp.composeapp.generated.resources.phone_number
 import datastore_kmp.composeapp.generated.resources.sign_in
 import datastore_kmp.composeapp.generated.resources.sign_in_with_google
+import datastore_kmp.composeapp.generated.resources.sign_up
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
 import org.waqas028.data_store_kmp.data.dto.SignUpDTO
 import org.waqas028.data_store_kmp.data.utils.isPasswordValid
 import org.waqas028.data_store_kmp.data.utils.isValidEmail
@@ -72,7 +72,7 @@ import org.waqas028.data_store_kmp.presentation.component.PasswordTextFields
 import org.waqas028.data_store_kmp.presentation.component.TextFieldWithIcon
 
 @Composable
-fun SignUpScreen(navController: NavController, authVM: AuthVM = koinViewModel()) {
+fun SignUpScreen(navController: NavController, authVM: AuthVM) {
     val signUpResponse = authVM.signUpResponse
 
     LaunchedEffect(signUpResponse) {
@@ -231,8 +231,10 @@ fun SignUpScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                CustomButton(modifier = Modifier.widthIn(min = 300.dp, max = 600.dp),
-                    buttonText = stringResource(Res.string.sign_in),
+                CustomButton(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                        .widthIn(min = 300.dp, max = 600.dp),
+                    buttonText = stringResource(Res.string.sign_up),
                     onButtonClick = {
                         val (isValid, passwordError) = isPasswordValid(password.trim())
                         if (emailAddress.trim().isEmpty() || password.trim().isEmpty()  || name.trim().isEmpty() || phoneNumber.trim().isEmpty()) {
@@ -256,10 +258,13 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(30.dp))
                 Image(
                     painter = painterResource(Res.drawable.ic_or_divider),
-                    contentDescription = "or divider"
+                    contentDescription = "or divider",
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 GoogleButton(
-                    modifier = Modifier.widthIn(min = 300.dp, max = 600.dp).padding(top = 30.dp),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .widthIn(min = 300.dp, max = 600.dp).padding(top = 30.dp),
                     buttonText = stringResource(Res.string.sign_in_with_google)
                 ) {}
                 Row(
@@ -268,11 +273,11 @@ fun SignUpScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stringResource(Res.string.not_a_member),
+                        text = stringResource(Res.string.already_a_member),
                         style = MaterialTheme.typography.body1,
                         color = MaterialTheme.colors.primary
                     )
-                    Text(text = stringResource(Res.string.create_an_account),
+                    Text(text = stringResource(Res.string.sign_in),
                         textDecoration = TextDecoration.Underline,
                         style = MaterialTheme.typography.body1,
                         fontWeight = FontWeight.ExtraBold,

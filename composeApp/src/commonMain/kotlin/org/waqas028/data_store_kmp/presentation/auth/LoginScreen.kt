@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -55,9 +56,7 @@ import datastore_kmp.composeapp.generated.resources.sign_in_with_google
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
 import org.waqas028.data_store_kmp.data.dto.LoginDTO
-import org.waqas028.data_store_kmp.data.model.UserPreferences
 import org.waqas028.data_store_kmp.data.utils.isValidEmail
 import org.waqas028.data_store_kmp.presentation.component.CustomButton
 import org.waqas028.data_store_kmp.presentation.component.CustomCircularProgressBar
@@ -67,7 +66,7 @@ import org.waqas028.data_store_kmp.presentation.component.TextFieldWithIcon
 import org.waqas028.data_store_kmp.presentation.navigation.Routes
 
 @Composable
-fun LoginScreen(navController: NavController, authVM: AuthVM = koinViewModel()) {
+fun LoginScreen(navController: NavController, authVM: AuthVM) {
     val loginResponse = authVM.loginResponse
 
     LaunchedEffect(loginResponse) {
@@ -86,7 +85,10 @@ fun LoginScreen(navController: NavController, authVM: AuthVM = koinViewModel()) 
         onSignInClick = { loginDTO ->
             authVM.login(loginDTO)
         },
-        onSignUpClick = { navController.navigate(Routes.SignUpScreen.route) },
+        onSignUpClick = {
+            authVM.error = ""
+            navController.navigate(Routes.SignUpScreen.route)
+        },
     )
 }
 
@@ -97,18 +99,24 @@ fun LoginScreen(
     onSignInClick: (LoginDTO) -> Unit,
     onSignUpClick: () -> Unit,
 ) {  
-    var emailAddress by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var emailAddress by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
-    var errorMessage by rememberSaveable { mutableStateOf(error) }
+    var errorMessage by remember { mutableStateOf(error) }
 
     LaunchedEffect(error){
         errorMessage = error
     }
 
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.LightGray)
+        modifier = Modifier.fillMaxSize()
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.35f)
+                .background(Color.LightGray)
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -132,7 +140,9 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colors.background).padding(horizontal = 15.dp)
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colors.background)
+                    .padding(horizontal = 15.dp)
             ) {
                 Spacer(modifier = Modifier.height(28.dp))
                 Text(
@@ -190,7 +200,9 @@ fun LoginScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                CustomButton(modifier = Modifier.widthIn(min = 300.dp, max = 600.dp),
+                CustomButton(
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                        .widthIn(min = 300.dp, max = 600.dp),
                     buttonText = stringResource(Res.string.sign_in),
                     onButtonClick = {
                         if (emailAddress.trim().isEmpty()) {
@@ -204,10 +216,12 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(30.dp))
                 Image(
                     painter = painterResource(Res.drawable.ic_or_divider),
-                    contentDescription = "or divider"
+                    contentDescription = "or divider",
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 GoogleButton(
-                    modifier = Modifier.widthIn(min = 300.dp, max = 600.dp).padding(top = 30.dp),
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                        .widthIn(min = 300.dp, max = 600.dp).padding(top = 30.dp),
                     buttonText = stringResource(Res.string.sign_in_with_google)
                 ) {}
                 Row(

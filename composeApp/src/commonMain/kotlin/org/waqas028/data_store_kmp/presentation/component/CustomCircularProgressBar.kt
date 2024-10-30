@@ -31,8 +31,8 @@ fun CustomCircularProgressBar(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(60.dp)
                     .align(Alignment.Center),
-                color = MaterialTheme.colors.secondary,
-                backgroundColor = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.primary,
+                backgroundColor = Color.White,
             )
         }
     }

@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
+import org.koin.compose.viewmodel.koinViewModel
+import org.waqas028.data_store_kmp.presentation.auth.AuthVM
 import org.waqas028.data_store_kmp.presentation.auth.LoginScreen
 import org.waqas028.data_store_kmp.presentation.auth.SignUpScreen
 import org.waqas028.data_store_kmp.presentation.home.HomeScreen
@@ -23,6 +25,8 @@ fun App(
 ) {
     MaterialTheme {
         KoinContext {
+            val authVM: AuthVM = koinViewModel()
+
             NavHost(
                 modifier = modifier,
                 navController = navController,
@@ -41,7 +45,7 @@ fun App(
                     enterTransition = { EnterTransition.None },
                     exitTransition = { ExitTransition.None }
                 ) {
-                    LoginScreen(navController)
+                    LoginScreen(navController, authVM)
                 }
 
                 composable(
@@ -49,7 +53,7 @@ fun App(
                     enterTransition = { EnterTransition.None },
                     exitTransition = { ExitTransition.None }
                 ) {
-                    SignUpScreen(navController)
+                    SignUpScreen(navController, authVM)
                 }
 
                 composable(
